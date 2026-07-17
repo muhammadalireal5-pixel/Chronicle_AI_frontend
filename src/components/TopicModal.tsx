@@ -31,7 +31,7 @@ export default function TopicModal({ isOpen, onClose, onStartResearch, headless 
   const handleExplore = async (query: string) => {
     setStep('EXPLORING');
     try {
-      const res = await fetch(`http://localhost:8000/api/research/explore`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/research/explore`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ query, headless })

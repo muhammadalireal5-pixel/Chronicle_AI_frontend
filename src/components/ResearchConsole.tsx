@@ -71,7 +71,7 @@ export default function ResearchConsole({ researchId }: ResearchConsoleProps) {
   const fetchPastChats = async () => {
     if (!userId) return;
     try {
-      const res = await fetch(`http://localhost:8000/api/chats/${userId}`);
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/chats/${userId}`);
       const data = await res.json();
       setPastChats(data.chats || []);
     } catch (e) {
@@ -92,7 +92,7 @@ export default function ResearchConsole({ researchId }: ResearchConsoleProps) {
     setLogs([]);
     
     if (chat.researchId) {
-      const res = await fetch(`http://localhost:8000/api/chat/${chat.researchId}`);
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/chat/${chat.researchId}`);
       const data = await res.json();
       setChatMessages(data.messages || []);
     }
@@ -111,7 +111,7 @@ export default function ResearchConsole({ researchId }: ResearchConsoleProps) {
   const deleteChat = async (resId: string) => {
     if (!confirm("Are you sure you want to delete this research session?")) return;
     try {
-      const res = await fetch(`http://localhost:8000/api/chats/${resId}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/chats/${resId}`, {
         method: 'DELETE'
       });
       const data = await res.json();
@@ -134,7 +134,7 @@ export default function ResearchConsole({ researchId }: ResearchConsoleProps) {
     setIsChatLoading(true);
 
     try {
-      const res = await fetch(`http://localhost:8000/api/chat`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id: activeResearchId, message: msg })
@@ -149,7 +149,7 @@ export default function ResearchConsole({ researchId }: ResearchConsoleProps) {
   };
 
   const resumeResearch = async () => {
-    await fetch(`http://localhost:8000/api/research/resume`, {
+    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/research/resume`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ id: activeResearchId })
@@ -185,7 +185,7 @@ export default function ResearchConsole({ researchId }: ResearchConsoleProps) {
       sseRef.current = null;
     }
 
-    await fetch(`http://localhost:8000/api/research/start`, {
+    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/research/start`, {
       method: 'POST',
       body: JSON.stringify({ id: targetId, query: finalQuery, userId, headless }),
       headers: { 'Content-Type': 'application/json' }
@@ -193,7 +193,7 @@ export default function ResearchConsole({ researchId }: ResearchConsoleProps) {
 
     fetchPastChats(); // Instantly show RUNNING item in sidebar
 
-    const sse = new EventSource(`http://localhost:8000/api/research/stream?id=${targetId}`);
+    const sse = new EventSource(`${process.env.NEXT_PUBLIC_API_URL}/api/research/stream?id=${targetId}`);
     sseRef.current = sse;
 
     sse.onmessage = (event) => {
@@ -229,7 +229,7 @@ export default function ResearchConsole({ researchId }: ResearchConsoleProps) {
   }, [logs, chatMessages]);
 
   const requestInterrupt = async () => {
-    await fetch(`http://localhost:8000/api/research/interrupt`, {
+    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/research/interrupt`, {
       method: 'POST',
       body: JSON.stringify({ id: activeResearchId }),
       headers: { 'Content-Type': 'application/json' }
@@ -252,7 +252,7 @@ export default function ResearchConsole({ researchId }: ResearchConsoleProps) {
     if (!report) return;
     setIsExporting(true);
     try {
-      const res = await fetch(`http://localhost:8000/api/research/share`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/research/share`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ report, title: `${query} - Research Report`, emails: emailsList })
