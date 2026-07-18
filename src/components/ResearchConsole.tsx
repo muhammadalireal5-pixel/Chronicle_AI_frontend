@@ -7,7 +7,7 @@ import TopicModal from './TopicModal';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import mermaid from 'mermaid';
-import { useReactToPrint } from 'react-to-print';
+
 
 mermaid.initialize({ startOnLoad: false, theme: 'default' });
 
@@ -63,10 +63,21 @@ export default function ResearchConsole({ researchId }: ResearchConsoleProps) {
   const { userId } = useAuth();
   const { user } = useUser();
 
-  const handlePrint = useReactToPrint({
-    contentRef: reportRef,
-    documentTitle: `Chronicle-Report-${new Date().toISOString().slice(0, 10)}`,
-  });
+  const handlePrint = async () => {
+    if (reportRef.current) {
+      // @ts-expect-error - html2pdf.js does not have official typescript definitions
+      const html2pdf = (await import('html2pdf.js')).default;
+      const element = reportRef.current;
+      const opt = {
+        margin:       10,
+        filename:     `Chronicle-Report-${new Date().toISOString().slice(0, 10)}.pdf`,
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 2 },
+        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      };
+      html2pdf().from(element).set(opt).save();
+    }
+  };
 
   const fetchPastChats = async () => {
     if (!userId) return;
