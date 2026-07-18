@@ -54,7 +54,7 @@ export default function ResearchConsole({ researchId }: ResearchConsoleProps) {
   const [shareEmails, setShareEmails] = useState("");
   const [isExporting, setIsExporting] = useState(false);
   const [docUrl, setDocUrl] = useState<string | null>(null);
-  const [headless, setHeadless] = useState(false);
+
   
   const logsEndRef = useRef<HTMLDivElement>(null);
   const chatEndRef = useRef<HTMLDivElement>(null);
@@ -187,7 +187,7 @@ export default function ResearchConsole({ researchId }: ResearchConsoleProps) {
 
     await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/research/start`, {
       method: 'POST',
-      body: JSON.stringify({ id: targetId, query: finalQuery, userId, headless }),
+      body: JSON.stringify({ id: targetId, query: finalQuery, userId, headless: true }),
       headers: { 'Content-Type': 'application/json' }
     });
 
@@ -305,7 +305,7 @@ export default function ResearchConsole({ researchId }: ResearchConsoleProps) {
         isOpen={showExploreModal} 
         onClose={() => setShowExploreModal(false)} 
         onStartResearch={(q) => startResearch(q)} 
-        headless={headless}
+
       />
 
       {showShareModal && (
@@ -429,16 +429,7 @@ export default function ResearchConsole({ researchId }: ResearchConsoleProps) {
                 </button>
               )}
 
-              <div className="flex items-center gap-2 mr-3 text-xs font-semibold text-slate-500 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-200">
-                <input 
-                  type="checkbox" 
-                  id="headless-toggle"
-                  checked={!headless}
-                  onChange={(e) => setHeadless(!e.target.checked)}
-                  className="rounded border-slate-300 text-blue-600 focus:ring-blue-500/40 w-4 h-4 cursor-pointer"
-                />
-                <label htmlFor="headless-toggle" className="cursor-pointer select-none text-slate-600 hover:text-slate-800">Show Browser Activity</label>
-              </div>
+
               <div className="pl-4 border-l border-slate-200 ml-1 flex items-center">
                 <Show when="signed-out">
                   <SignInButton mode="modal">

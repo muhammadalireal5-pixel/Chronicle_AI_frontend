@@ -11,7 +11,6 @@ interface TopicModalProps {
   isOpen: boolean;
   onClose: () => void;
   onStartResearch: (query: string) => void;
-  headless?: boolean;
 }
 
 const CATEGORIES = [
@@ -21,7 +20,7 @@ const CATEGORIES = [
   { name: 'Economics', prompt: 'Global economics and future markets' },
 ];
 
-export default function TopicModal({ isOpen, onClose, onStartResearch, headless = false }: TopicModalProps) {
+export default function TopicModal({ isOpen, onClose, onStartResearch }: TopicModalProps) {
   const [step, setStep] = useState<'SELECT' | 'EXPLORING' | 'SUBTOPICS'>('SELECT');
   const [customTopic, setCustomTopic] = useState('');
   const [subTopics, setSubTopics] = useState<SubTopic[]>([]);
@@ -34,7 +33,7 @@ export default function TopicModal({ isOpen, onClose, onStartResearch, headless 
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/research/explore`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ query, headless })
+        body: JSON.stringify({ query, headless: true })
       });
       const data = await res.json();
       if (data.topics && data.topics.length > 0) {
