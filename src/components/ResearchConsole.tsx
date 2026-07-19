@@ -65,7 +65,6 @@ export default function ResearchConsole({ researchId }: ResearchConsoleProps) {
 
   const handlePrint = async () => {
     if (reportRef.current) {
-      // @ts-expect-error - html2pdf.js does not have official typescript definitions
       const html2pdf = (await import('html2pdf.js')).default;
       const element = reportRef.current;
       const opt = {
