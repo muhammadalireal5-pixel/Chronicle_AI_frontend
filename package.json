@@ -1,6 +1,7 @@
 {
-  "name": "web",
+  "name": "chronicle-ai-web",
   "version": "0.1.0",
+  "description": "Chronicle AI — Autonomous Deep Research Engine. A Next.js frontend for conducting AI-powered, fact-checked deep research with real-time streaming, interactive pause/resume, and comprehensive report generation.",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -11,13 +12,13 @@
   "dependencies": {
     "@clerk/nextjs": "^7.5.17",
     "framer-motion": "^12.42.2",
+    "html2pdf.js": "^0.14.0",
     "lucide-react": "^1.24.0",
     "mermaid": "^11.16.0",
     "next": "16.2.10",
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "react-markdown": "^10.1.0",
-    "react-to-print": "^3.3.0",
     "recharts": "^3.9.2",
     "remark-gfm": "^4.0.1"
   },
