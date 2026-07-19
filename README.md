@@ -2,6 +2,9 @@
 
 **Autonomous Deep Research Engine | Real-Time Research Console**
 
+🌐 **Live Demo:** [chronicle-ai-frontend-sandy.vercel.app](https://chronicle-ai-frontend-sandy.vercel.app/)  
+🔗 **Backend API:** [chronicle-ai-backend-a7go.onrender.com](https://chronicle-ai-backend-a7go.onrender.com/)
+
 Chronicle AI is an autonomous deep research platform that conducts live web research, extracts verifiable evidence, and produces multi-pass fact-checked reports — all in real time. This is the **frontend interface** built with Next.js 16 and React 19, providing users with a seamless, interactive research experience.
 
 ---
@@ -36,10 +39,8 @@ Users can export the complete research report — including tables, diagrams, an
 
 **How it's achieved:** The export function uses `html2pdf.js` to capture the rendered report DOM, convert it to a high-resolution canvas (2x scale), and output it as an A4 PDF with proper margins and JPEG compression.
 
-### 📧 Email Sharing
-Reports can be shared directly via email. The backend converts Markdown to styled HTML and sends it through the Resend email API.
-
-**How it's achieved:** The share modal collects recipient email addresses, sends them along with the report content to `/api/research/share`, where the backend converts Markdown to HTML with inline styling and dispatches via Resend.
+### 📧 Email Sharing *(Coming Soon)*
+Email sharing of research reports is currently under development and will be available in an upcoming release. Once live, users will be able to share reports directly via email — the backend will convert Markdown to styled HTML and deliver it through the Resend email API.
 
 ### 🔍 AI-Powered Topic Exploration
 Before committing to a full research session, users can explore a broad topic to discover **trending, high-impact sub-topics** suggested by the AI based on live web search results.

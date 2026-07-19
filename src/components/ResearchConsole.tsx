@@ -320,40 +320,22 @@ export default function ResearchConsole({ researchId }: ResearchConsoleProps) {
 
       {showShareModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm">
-          <div className="bg-white w-[480px] max-w-[90vw] rounded-2xl shadow-2xl p-6 flex flex-col gap-4 animate-in fade-in zoom-in-95 duration-200">
+          <div className="bg-white w-[420px] max-w-[90vw] rounded-2xl shadow-2xl p-6 flex flex-col gap-4 items-center text-center animate-in fade-in zoom-in-95 duration-200">
+            <div className="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center">
+              <Send className="w-5 h-5 text-blue-400" />
+            </div>
             <div>
-              <h3 className="text-lg font-bold text-slate-900">Share Report via Email</h3>
-              <p className="text-xs text-slate-500 mt-1">
-                Enter email addresses separated by commas to email this research report as rich HTML.
+              <h3 className="text-lg font-bold text-slate-900">Email Sharing — Coming Soon</h3>
+              <p className="text-sm text-slate-500 mt-2">
+                We&apos;re working on email delivery for research reports. This feature will be available soon.
               </p>
             </div>
-            
-            <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-semibold text-slate-600">Collaborator Emails</label>
-              <textarea
-                placeholder="e.g. user@gmail.com, colleague@gmail.com"
-                value={shareEmails}
-                onChange={(e) => setShareEmails(e.target.value)}
-                className="w-full min-h-[80px] p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/40 text-slate-800 placeholder:text-slate-400"
-              />
-            </div>
-
-            <div className="flex justify-end gap-2.5 mt-2">
-              <button
-                onClick={() => setShowShareModal(false)}
-                className="px-4 py-2 border border-slate-200 hover:bg-slate-50 rounded-xl text-sm font-medium text-slate-700 transition-all"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={() => shareViaEmail(shareEmails.split(',').map(e => e.trim()).filter(Boolean))}
-                disabled={isExporting}
-                className="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-sm font-medium transition-all disabled:opacity-50 flex items-center gap-1.5"
-              >
-                {isExporting ? <Activity className="w-3.5 h-3.5 animate-spin" /> : <Send className="w-3.5 h-3.5" />}
-                {isExporting ? 'Sending...' : 'Share via Email'}
-              </button>
-            </div>
+            <button
+              onClick={() => setShowShareModal(false)}
+              className="px-5 py-2 border border-slate-200 hover:bg-slate-50 rounded-xl text-sm font-medium text-slate-700 transition-all"
+            >
+              Got it
+            </button>
           </div>
         </div>
       )}
@@ -562,15 +544,11 @@ export default function ResearchConsole({ researchId }: ResearchConsoleProps) {
                         <Download className="w-3.5 h-3.5" /> Download as PDF
                       </button>
                       <button
-                        onClick={() => {
-                          setShareEmails(user?.primaryEmailAddress?.emailAddress || "");
-                          setShowShareModal(true);
-                        }}
-                        disabled={isExporting}
-                        className="flex items-center gap-1.5 px-3 py-1.5 text-xs text-white bg-blue-600 hover:bg-blue-700 border border-transparent rounded-lg transition-all disabled:opacity-50"
+                        onClick={() => setShowShareModal(true)}
+                        className="flex items-center gap-1.5 px-3 py-1.5 text-xs text-slate-400 bg-slate-100 border border-slate-200 rounded-lg cursor-default"
                       >
-                        {isExporting ? <Activity className="w-3.5 h-3.5 animate-spin" /> : <Send className="w-3.5 h-3.5" />}
-                        {isExporting ? 'Sending...' : 'Share via Email'}
+                        <Send className="w-3.5 h-3.5" />
+                        Share via Email (Coming Soon)
                       </button>
                     </>
                   )}
